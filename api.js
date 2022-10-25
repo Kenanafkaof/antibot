@@ -97,7 +97,11 @@ app.get('/token', (req, res) => {
     const headers = req.headers
     const user = req.get('user-agent')
     const fingerprint = req.fingerprint.hash
-    const platform = req.headers['sec-ch-ua-platform'].replace(/["']+/g, '')
+    try {
+        const platform = req.headers['sec-ch-ua-platform'].replace(/["']+/g, '')
+    }catch(err){
+        const platform = req.headers['sec-ch-ua-platform']
+    }
     const authorization_session = req.headers.sessionid
     function validateSession(authorization_session) {
         pool.getConnection(function(err, connection, next) {
@@ -158,8 +162,12 @@ app.get('/token', (req, res) => {
 app.get('/', (req, res) => {
     const headers = req.headers
     const userAgent = req.get('user-agent')
-    const fingerprint = req.fingerprint.hash
-    const platform = req.headers['sec-ch-ua-platform'].replace(/["']+/g, '')
+    const fingerprint = req.fingerprint.hashtry
+    try {
+        const platform = req.headers['sec-ch-ua-platform'].replace(/["']+/g, '')
+    }catch(err){
+        const platform = req.headers['sec-ch-ua-platform']
+    }
     const authentication = req.headers.authorization;
     const cookie = req.headers.validation;
     function validateToken(token) {
@@ -245,8 +253,8 @@ app.get('/deletesessions', (req, res) => {
 });
 
 
-//app.listen(port, () => {
-//  console.log(`Example app listening on port ${port}`)
-//});
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
+});
 
-app.listen(process.env.PORT, '0.0.0.0');
+//app.listen(process.env.PORT, '0.0.0.0');
