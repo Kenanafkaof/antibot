@@ -1,0 +1,59 @@
+app.get('/token', (req, res) => {
+    const user = req.get('user-agent')
+    console.log(req.headers)
+    console.log(req.fingerprint)
+    const authorization_session = req.headers.sessionid
+    function validateSession(authorization_session) {
+        var add_data = "INSERT INTO sessions (sessionid, user) VALUES ('"+authorization_session+"', '"+user+"')";
+        pool.query(add_data, function (err, result, fields) {
+            if (err) throw err;
+        });
+        pool.getConnection(function(err, connection, next) {
+            pool.query('SELECT * FROM sessions WHERE sessionid = ? AND user = ?', [authorization_session, user], function(error, results, fields) {
+                if (error) throw error;
+                if(results.length >= 1){
+                    return res.status(403).json({
+                        error: 'Invalid session. You are a bot!'
+                    })
+                }
+            });
+            pool.query("DELETE FROM sessions WHERE sessionid = ? AND user = ?", [authorization_session, user], function (err, result) {
+                if (err) throw err;
+            });
+        });
+        return true
+    }
+    function configureToken() {
+        var rand = function() {
+            return Math.random().toString(36).substr(2); // remove `0.`
+        };
+        
+        var token = function() {
+            return rand() + rand() + rand() + rand(); // to make it longer
+        };
+        
+        return token();
+      }
+    if (authorization_session === undefined || authorization_session === null || authorization_session === "") {
+        return res.status(403).json({
+            error: 'You are a bot!'
+        })
+    }else {
+        const session_check = validateSession(authorization_session)
+        if (session_check === true) {
+            const token = configureToken()
+            var add_data = "INSERT INTO tokens (token, user) VALUES ('"+token+"', '"+user+"')";
+            pool.query(add_data, function (err, result, fields) {
+                if (err) throw err;
+                return res.status(200).json({
+                    token: token
+                }) 
+            });
+        }else {
+            return res.status(403).json({
+                error: 'You are a bot!'
+            })
+        }
+    }
+
+});
