@@ -21,17 +21,17 @@ const limiter = rateLimit({
 	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
 	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
     handler: function (req, res, /*next*/) {
-        return res.status(404).json({
+        return res.status(403).json({
           error: 'You sent too many requests. Please wait a while then try again'
         })
     }
 })
 const initialCheck = function (req, res, next) {
     const userAgent = req.get('user-agent')
-    const agents_blocked = ['python-requests', 'go-requests', 'requests', "360Spider","404checker","404enemy","80legs","Abonti","Aboundex","Aboundexbot","Acunetix","ADmantX","AfD-Verbotsverfahren","AhrefsBot","AIBOT","AiHitBot","Aipbot","Alexibot","Alligator","AllSubmitter","AlphaBot","Anarchie","Apexoo"];
+    const agents_blocked = ['python-requests', 'go-requests', 'requests', "360Spider","403checker","403enemy","80legs","Abonti","Aboundex","Aboundexbot","Acunetix","ADmantX","AfD-Verbotsverfahren","AhrefsBot","AIBOT","AiHitBot","Aipbot","Alexibot","Alligator","AllSubmitter","AlphaBot","Anarchie","Apexoo"];
     const found = agents_blocked.find(v => userAgent.includes(v));
     if (found) {
-        return res.status(404).json({
+        return res.status(403).json({
             error: 'You are a bot!'
         })
     }
@@ -92,7 +92,7 @@ app.get('/token', (req, res) => {
       }
 
     if (authorization_session === undefined) {
-        return res.status(404).json({
+        return res.status(403).json({
             error: 'You are a bot!'
         })
     }
@@ -124,7 +124,7 @@ app.get('/', (req, res) => {
                         success: 'You are not a bot!'
                     })
                 }else{  
-                    return res.status(404).json({
+                    return res.status(403).json({
                         error: 'Invalid token. You are a bot!'
                     })
                 }
@@ -143,7 +143,7 @@ app.get('/', (req, res) => {
             validateToken(authentication)
         }
     }else {
-        return res.status(404).json({
+        return res.status(403).json({
             error: 'You are a bot!'
         })
     }

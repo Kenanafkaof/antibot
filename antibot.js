@@ -1,5 +1,3 @@
-const e = require("express");
-
 function securityCheck() {
     const bot_check = document.getElementById("botcheck")
     const user_agent = navigator.userAgent
