@@ -100,7 +100,7 @@ app.get('/token', (req, res) => {
     try {
         const platform = req.headers['sec-ch-ua-platform'].replace(/["']+/g, '')
     }catch(err){
-        const platform = req.headers['sec-ch-ua-platform']
+        platform = req.headers['sec-ch-ua-platform']
     }
     const authorization_session = req.headers.sessionid
     function validateSession(authorization_session) {
@@ -166,7 +166,7 @@ app.get('/', (req, res) => {
     try {
         const platform = req.headers['sec-ch-ua-platform'].replace(/["']+/g, '')
     }catch(err){
-        const platform = req.headers['sec-ch-ua-platform']
+        platform = req.headers['sec-ch-ua-platform']
     }
     const authentication = req.headers.authorization;
     const cookie = req.headers.validation;
