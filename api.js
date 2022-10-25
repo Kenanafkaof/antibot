@@ -245,6 +245,8 @@ app.get('/deletesessions', (req, res) => {
 });
 
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-});
+//app.listen(port, () => {
+//  console.log(`Example app listening on port ${port}`)
+//});
+
+app.listen(process.env.PORT, '0.0.0.0');
