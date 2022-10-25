@@ -97,7 +97,7 @@ app.get('/token', (req, res) => {
     const headers = req.headers
     const user = req.get('user-agent')
     const fingerprint = req.fingerprint.hash
-    const platform = ""
+    var platform = ""
     try {
         platform = req.headers['sec-ch-ua-platform'].replace(/["']+/g, '')
     }catch(err){
@@ -164,7 +164,7 @@ app.get('/', (req, res) => {
     const headers = req.headers
     const userAgent = req.get('user-agent')
     const fingerprint = req.fingerprint.hashtry
-    const platform = ""
+    var platform = ""
     try {
         platform = req.headers['sec-ch-ua-platform'].replace(/["']+/g, '')
     }catch(err){
