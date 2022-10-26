@@ -36,13 +36,7 @@ const limiter = rateLimit({
 })
 
 const initialCheck = function (req, res, next) {
-    const userAgent = req.get('user-agent')
-    const hash_check = req.fingerprint.hash
-    if (hash_check == undefined || hash_check == "undefined" || hash_check == "" || hash_check == null) {
-        return res.status(403).json({
-            error: 'You are a bot!'
-        })
-    }
+    const userAgent = req.get('user-agent')    
     const agents_blocked = ['python-requests', 'go-requests', 'requests', "360Spider","403checker","403enemy","80legs","Abonti","Aboundex","Aboundexbot","Acunetix","ADmantX","AfD-Verbotsverfahren","AhrefsBot","AIBOT","AiHitBot","Aipbot","Alexibot","Alligator","AllSubmitter","AlphaBot","Anarchie","Apexoo"];
     const found = agents_blocked.find(v => userAgent.includes(v));
     if (found) {
@@ -170,6 +164,11 @@ app.get('/', (req, res) => {
     const headers = req.headers
     const userAgent = req.get('user-agent')
     const fingerprint = req.fingerprint.hashtry
+    if (fingerprint == undefined || fingerprint == "undefined" || fingerprint == "" || fingerprint == null) {
+        return res.status(403).json({
+            error: 'You are a bot!'
+        })
+    }
     var platform = ""
     try {
         platform = req.headers['sec-ch-ua-platform'].replace(/["']+/g, '')
