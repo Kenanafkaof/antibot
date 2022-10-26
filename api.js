@@ -41,7 +41,7 @@ const initialCheck = function (req, res, next) {
         const header_origin = req.headers.origin
         if (header_origin != "https://kenanafkaof.github.io") { 
             return res.status(403).json({
-                error: 'You are a bot!'
+                error: 'origin does not match'
             })
         }
     }catch(error){
