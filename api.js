@@ -37,6 +37,14 @@ const limiter = rateLimit({
 
 const initialCheck = function (req, res, next) {
     const userAgent = req.get('user-agent')    
+    try{
+        const header_origin = req.headers.origin
+        console.log(header_origin)
+    }catch(error){
+        return res.status(403).json({
+            error: 'You are a bot!'
+        })
+    }
     const agents_blocked = ['python-requests', 'go-requests', 'requests', "360Spider","403checker","403enemy","80legs","Abonti","Aboundex","Aboundexbot","Acunetix","ADmantX","AfD-Verbotsverfahren","AhrefsBot","AIBOT","AiHitBot","Aipbot","Alexibot","Alligator","AllSubmitter","AlphaBot","Anarchie","Apexoo"];
     const found = agents_blocked.find(v => userAgent.includes(v));
     if (found) {
