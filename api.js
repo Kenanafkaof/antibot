@@ -39,7 +39,11 @@ const initialCheck = function (req, res, next) {
     const userAgent = req.get('user-agent')    
     try{
         const header_origin = req.headers.origin
-        console.log(header_origin)
+        if (header_origin != "https://kenanafkaof.github.io") { 
+            return res.status(403).json({
+                error: 'You are a bot!'
+            })
+        }
     }catch(error){
         return res.status(403).json({
             error: 'You are a bot!'
