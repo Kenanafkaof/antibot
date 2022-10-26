@@ -163,7 +163,7 @@ app.get('/token', (req, res) => {
 app.get('/', (req, res) => {
     const headers = req.headers
     const userAgent = req.get('user-agent')
-    const fingerprint = req.fingerprint.hashtry
+    const fingerprint = req.fingerprint.hash
     if (fingerprint == undefined || fingerprint == "undefined" || fingerprint == "" || fingerprint == null) {
         return res.status(403).json({
             error: 'You are a bot!'
