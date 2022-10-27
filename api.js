@@ -17,15 +17,16 @@ for (let i = 0; i < 100; i++) {
 
 const limiter = rateLimit({
 	windowMs: 1 * 60 * 1000, // 1 minutes
-	max: 50, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
-	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
-	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+	max: 10, // Limit each IP to 100 requests per `window` (here, per 1 minutes)
+	standardHeaders: true, 
+	legacyHeaders: false,
     handler: function (req, res, /*next*/) {
         return res.status(403).json({
           error: 'You sent too many requests. Please wait a while then try again'
         })
     }
 })
+
 const initialCheck = function (req, res, next) {
     const userAgent = req.get('user-agent')
     const agents_blocked = ['python-requests', 'go-requests', 'requests', "360Spider","403checker","403enemy","80legs","Abonti","Aboundex","Aboundexbot","Acunetix","ADmantX","AfD-Verbotsverfahren","AhrefsBot","AIBOT","AiHitBot","Aipbot","Alexibot","Alligator","AllSubmitter","AlphaBot","Anarchie","Apexoo"];
