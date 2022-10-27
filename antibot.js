@@ -18,7 +18,7 @@ function securityCheck() {
 
 
     async function getToken() {
-      const response = await fetch('http://127.0.0.1:3000/token', {
+      const response = await fetch('https://antibot-app.herokuapp.com/token', {
         method: 'GET',
         headers: {
           'Content-Type': 'text/plain',
@@ -34,7 +34,7 @@ function securityCheck() {
     }
     
     function validateUser(token, cookie_returned) {
-      fetch("http://127.0.0.1:3000/", {
+      fetch("https://antibot-app.herokuapp.com/", {
         method: 'GET',
         headers: {
           'Content-Type': 'text/plain',
@@ -67,7 +67,5 @@ function securityCheck() {
         clientSide()
       }
     });
-
-
 
 }
