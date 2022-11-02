@@ -20,6 +20,7 @@ function securityCheck() {
     async function getToken() {
       const response = await fetch('https://antibot-app.herokuapp.com/token', {
         method: 'GET',
+        credentials: 'include',
         headers: {
           'Content-Type': 'text/plain',
           'sessionid': configureToken(),
