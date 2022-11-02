@@ -37,19 +37,7 @@ const limiter = rateLimit({
 
 const initialCheck = function (req, res, next) {
     const userAgent = req.get('user-agent')    
-    try{
-        const header_origin = req.headers.origin
-        if (header_origin != "https://kenanafkaof.github.io") { 
-            return res.status(403).json({
-                error: 'origin does not match'
-            })
-        }
-    }catch(error){
-        return res.status(403).json({
-            error: 'You are a bot!'
-        })
-    }
-    const agents_blocked = ['python-requests', 'go-requests', 'requests', "360Spider","403checker","403enemy","80legs","Abonti","Aboundex","Aboundexbot","Acunetix","ADmantX","AfD-Verbotsverfahren","AhrefsBot","AIBOT","AiHitBot","Aipbot","Alexibot","Alligator","AllSubmitter","AlphaBot","Anarchie","Apexoo"];
+    const agents_blocked = ['python-requests', 'go-requests', 'requests', "360Spider","403checker","403enemy","80legs","Abonti","Aboundex","Aboundexbot","Acunetix","ADmantX","AfD-Verbotsverfahren","AhrefsBot","AIBOT","AiHitBot","Aipbot","Alexibot","Alligator","AllSubmitter","AlphaBot","Anarchie","Apexoo", "HeadlessChrome"];
     const found = agents_blocked.find(v => userAgent.includes(v));
     if (found) {
         return res.status(403).json({
@@ -115,6 +103,7 @@ app.get('/token', (req, res) => {
     }catch(err){
         platform = req.headers['sec-ch-ua-platform']
     }
+    res.cookie('sessionCookie', configureToken())
     const authorization_session = req.headers.sessionid
     function validateSession(authorization_session) {
         pool.getConnection(function(err, connection, next) {
